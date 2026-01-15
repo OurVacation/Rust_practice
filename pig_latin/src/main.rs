@@ -6,7 +6,7 @@
 /*   By: taewonki <taewonki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:24:42 by taewonki          #+#    #+#             */
-/*   Updated: 2026/01/12 17:15:52 by taewonki         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:08:06 by taewonki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,14 @@ fn convert_pl(word: &str) -> String
 {
     let vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
 
-    let first_char = match word.chars().next(){
-        Some(c) => c,
-        None => return String::new(),
-    };
-
-    if !first_char.is_ascii_alphabetic()
-    {
-        return word.to_string();
-    }
-    if vowels.contains(&first_char)
-    {
-        format!("{word}-hay")
-    }
-    else
-    {
+    match word.chars().next() {
+        Some(c) if !c.is_ascii_alphabetic() => word.to_string(),
+        Some(c) if vowels.contains(&c) => format!("{word}-hay"),
+        Some(c) => {
         let rest = &word[1..];
         format!("{}-{}ay", rest, first_char)
+    }
+        None => String::new(),
     }
 }
 

@@ -6,7 +6,7 @@
 /*   By: taewonki <taewonki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:00:15 by taewonki          #+#    #+#             */
-/*   Updated: 2026/01/12 16:21:52 by taewonki         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:55:50 by taewonki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ fn main()
     };
 
     arr.sort();
-    let middle_idx = arr.len() / 2;
-    println!("중간값 : {}", arr[middle_idx]);
+    println!("중간값 : {}", arr[arr.len() / 2]);
 
     for i in arr
     {
@@ -65,15 +64,13 @@ fn main()
 fn parse_argv(av:Vec<String>) -> Vec<i32>
 {
     let mut result = Vec::new();
-
+    let a = "123".to_string();
     for arg in &av[1..]{
         for part in arg.split_whitespace(){
             match part.parse::<i32>(){
                 Ok(num) => result.push(num),
-                Err(_) => {
-                    println!("{part}는 숫자가 아님");
-                    process::exit(1);
-                },
+                Err(other) if other.kind() == std::num::IntErrorKind::InvalidDigit  =>  panic!("{part}는 숫자가 아님"),
+                _ => panic!("some other error"),
             }
         }
     }
